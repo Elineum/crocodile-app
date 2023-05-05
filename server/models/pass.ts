@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { collection: "Crocodile-app-users" }
+  { collection: process.env.DB_COLLECTION_BRANCH }
 );
 
 export const User = mongoose.model("User", userSchema);
