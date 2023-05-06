@@ -47,31 +47,43 @@ io.on("connection", (socket) => {
   });
 
   socket.on("signIn", (data) => {
-    const { mail, name, password } = data;
+    console.log("yep");
+  });
 
-    bcrypt.hash(
-      password,
-      parseInt(process.env.SALT_ROUND as string),
-      async (err, hash) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
+  socket.on("signUp", (data) => {
+    const { name, email, password } = data;
 
-        try {
-          const user = new User({
-            email: mail,
-            name: name,
-            password: hash,
-          });
+    User.find({ email: { $eq: email } })
+      .then((result: any) => {
+        result.length === 0
+          ? bcrypt.hash(
+              password,
+              parseInt(process.env.SALT_ROUND as string),
+              async (err, hash) => {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
 
-          await user.save();
-          console.log("Reg is succesfull");
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    );
+                try {
+                  const user = new User({
+                    email: email,
+                    name: name,
+                    password: hash,
+                  });
+
+                  await user.save();
+                  console.log("Reg is succesfull");
+                } catch (err) {
+                  console.error(err);
+                }
+              }
+            )
+          : socket.emit("alreadyExist", email);
+      })
+      .catch((error: Error) => {
+        console.error(error);
+      });
   });
 });
 

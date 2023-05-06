@@ -5,6 +5,7 @@ import {
   ClientToServerEvents,
   ServerToClientEvents,
 } from "./interfaces/socketInterfases";
+import { Authentication } from "./components/Authentication/Authentication";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
   "http://localhost:5000"
@@ -13,8 +14,9 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
 function App() {
   return (
     <div>
-      <Join socket={socket} />
-      <Room socket={socket} />
+      {/* <Join socket={socket} />
+      <Room socket={socket} /> */}
+      <Authentication socket={socket} />
     </div>
   );
 }
