@@ -1,0 +1,79 @@
+@import "../../styles/variables";
+
+.auth-comp {
+  min-width: 800px;
+  min-height: 500px;
+  position: relative;
+
+  &__sides-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    height: 420px;
+    width: 100%;
+    top: 40px;
+    border-radius: 15px;
+
+    background-color: $paletteDark;
+  }
+
+  &__side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+    position: relative;
+    height: 100%;
+    width: 50%;
+  }
+
+  &__form-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    width: 50%;
+    height: 100%;
+    z-index: 5;
+    transition: ease-in-out 0.5s;
+    border-radius: 15px;
+
+    background-color: $paletteLigth;
+
+    &.right-position {
+      left: 50%;
+
+      & .auth-comp__form-wrap {
+        left: -100%;
+      }
+
+      & .auth-comp__form-wrap_sign-in {
+        left: -100%;
+      }
+
+      & .auth-comp__form-wrap_sign-up {
+        left: 0;
+      }
+    }
+  }
+
+  &__form-wrap {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 50px;
+    transition-delay: 0.2s;
+    transition-duration: 0.3s;
+
+    &_sign-up {
+      left: 100%;
+    }
+  }
+}

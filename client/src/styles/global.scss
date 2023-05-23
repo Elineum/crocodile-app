@@ -1,5 +1,8 @@
+@import "./reset.scss";
+
 body {
-  background-color: rgb(196, 196, 196);
+  background-image: url(../../public/bg.jpg);
+  font-family: Georgia, sans-serif;
 }
 
 #root {

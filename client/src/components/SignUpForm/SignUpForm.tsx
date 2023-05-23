@@ -1,6 +1,6 @@
 import { useEffect, useState, FormEventHandler } from "react";
-import { FormButton } from "../FormButton/FormButton";
-import { FormInput } from "../FormInput/FormInput";
+import { Button } from "../Button/Button";
+import { FormField } from "../FormField/FormField";
 import { Socket } from "socket.io-client";
 import "./SignUpForm.scss";
 
@@ -9,20 +9,19 @@ interface SignUpProps {
 }
 
 export const SignUpForm = ({ socket }: SignUpProps) => {
-  const [mailPossible, setMailPossible] = useState(true);
-
   useEffect(() => {
-    const handleExist = (currMail: any) => {
-      setMailPossible(false);
-      console.error(`${currMail} already Exist`);
+    const isExist = (data: any) => {
+      console.log(data + " already exist");
     };
 
-    socket.on("alreadyExist", handleExist);
+    socket.on("alreadyExist", isExist);
 
     return () => {
-      socket.off("alreadyExist", handleExist);
+      socket.off("alreadyExist", isExist);
     };
   }, [socket]);
+
+  //TODO перенести логику хэндлеров в родителя, без повторения кода. (2компонента)
 
   const submitHendler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -31,7 +30,6 @@ export const SignUpForm = ({ socket }: SignUpProps) => {
     const formData = new FormData(form);
 
     const user = {
-      name: formData.get("nickname"),
       email: formData.get("email"),
       password: formData.get("password"),
     };
@@ -39,12 +37,26 @@ export const SignUpForm = ({ socket }: SignUpProps) => {
     socket.emit("signUp", user);
   };
 
+  const guestHandler = (e: any) => {
+    e.preventDefault();
+
+    console.log("Guest login");
+  };
+
   return (
-    <form onSubmit={submitHendler}>
-      <FormInput text="Nickname:" type="text" name="nickname" />
-      <FormInput text="Email:" type="email" name="email" />
-      <FormInput text="Password:" type="password" name="password" />
-      <FormButton text="Sign Up" />
+    <form className="auth-form" onSubmit={submitHendler}>
+      <h2 className="auth-form__title">Sign Up</h2>
+      <FormField type="email" name="email" id="sign-up-mail">
+        email
+      </FormField>
+      <FormField type="password" name="password" id="sign-up-pass">
+        password
+      </FormField>
+      <div className="auth-form__splitter">
+        <Button>Register</Button>
+        <span className="auth-form__split-span">or</span>
+        <Button eventFunc={guestHandler}>Guest</Button>
+      </div>
     </form>
   );
 };

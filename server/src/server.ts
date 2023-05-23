@@ -4,14 +4,14 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import { User } from "../models/pass";
 import {
   ClientToServerEvents,
   ServerToClientEvents,
   InterServerEvents,
   SocketData,
 } from "../interfaces/socketInterfases";
+import { registrationHandler } from "./utils/registration";
+import { loginHandler } from "./utils/login";
 
 dotenv.config();
 
@@ -46,44 +46,12 @@ io.on("connection", (socket) => {
     console.log(data);
   });
 
-  socket.on("signIn", (data) => {
-    console.log("yep");
+  socket.on("signIn", (formData) => {
+    loginHandler(formData, socket);
   });
 
-  socket.on("signUp", (data) => {
-    const { name, email, password } = data;
-
-    User.find({ email: { $eq: email } })
-      .then((result: any) => {
-        result.length === 0
-          ? bcrypt.hash(
-              password,
-              parseInt(process.env.SALT_ROUND as string),
-              async (err, hash) => {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
-
-                try {
-                  const user = new User({
-                    email: email,
-                    name: name,
-                    password: hash,
-                  });
-
-                  await user.save();
-                  console.log("Reg is succesfull");
-                } catch (err) {
-                  console.error(err);
-                }
-              }
-            )
-          : socket.emit("alreadyExist", email);
-      })
-      .catch((error: Error) => {
-        console.error(error);
-      });
+  socket.on("signUp", (formInfo) => {
+    registrationHandler(formInfo, socket);
   });
 });
 

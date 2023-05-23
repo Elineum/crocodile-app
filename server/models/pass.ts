@@ -5,16 +5,20 @@ dotenv.config();
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    nickname: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
+    },
+    regDate: {
+      type: Number,
+    },
+    isMember: {
+      type: Boolean,
       required: true,
     },
   },

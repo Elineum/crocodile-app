@@ -1,0 +1,23 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__title {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 5px;
+  }
+
+  &__splitter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__split-span {
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+}

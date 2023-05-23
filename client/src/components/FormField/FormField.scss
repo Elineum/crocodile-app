@@ -1,0 +1,36 @@
+@import "../../styles/variables";
+
+.field {
+  position: relative;
+
+  &__label {
+    font-size: 14px;
+    color: white;
+    background-color: $paletteLigth;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    padding: 0 5px;
+    border-radius: 2px;
+    transform: translate(20px, -9px);
+    text-transform: uppercase;
+    border: 1px solid white;
+    letter-spacing: 1px;
+  }
+
+  &__input {
+    font-size: 16px;
+    outline: none;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 17px 20px 13px;
+    width: 100%;
+    background-color: transparent;
+    color: white;
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px rgb(255, 255, 255) inset !important;
+    }
+  }
+}

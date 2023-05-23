@@ -1,0 +1,25 @@
+.join {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+
+  &__button-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+}

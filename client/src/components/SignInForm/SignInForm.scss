@@ -1,8 +1,11 @@
 .auth-form {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 
   &__title {
-    text-align: center;
+    font-size: 30px;
+    color: white;
+    margin-bottom: 5px;
   }
 }
